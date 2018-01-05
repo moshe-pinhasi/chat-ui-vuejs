@@ -1,26 +1,22 @@
 <template>
-  <div class="message-creation container-fluid">
-    <div class="row message-creator">
-      <image-avatar class="col-1" :user="user" image-size="sm"></image-avatar>
-      <input
-        type="text"
-        class="form-control col-3"
-        id="username"
-        placeholder="Username"        
-        v-model="username">
-      <button 
-        type="button" 
-        class="btn btn-primary col-2 form-control"
-        @click="connectToggle">
-        {{user ? 'Disconnect' : 'Connect' }}
-      </button>
-    </div>
-    <div class="row message-box">
-      <textarea class="form-control" placeholder="Type a message" :disabled="!user"></textarea>
+  <div class="message-creation container">
+    <div class="message-creator">
+      <user-login></user-login>
     </div>
 
-    <div class="row message-actions">
-      <button type="submit" class="btn btn-success col-1 form-control" :disabled="!user">Send</button>
+    <div class="message-box">
+      <form @submit.prevent="onSubmit">
+        <div class="row">
+          <textarea class="form-control" 
+                    placeholder="Type a message" 
+                    :disabled="!user"
+                    v-model="message"
+                    @blur="$v.message.$touch()"></textarea>
+        </div>
+        <div class="row message-actions">
+          <button type="submit" class="btn btn-success col-2 form-control" :disabled="!user || !message">Send</button>
+        </div>    
+      </form>
     </div>
   </div>
 </template>
@@ -28,13 +24,13 @@
 <script>
 'use strict'
 
-import ImageAvatar from './UserAvatar'
-import { CONNECT, DISCONNECT } from '../store/UserModule'
+import UserLogin from './UserLogin'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
-      username: null
+      message: null
     }
   },
   computed: {
@@ -42,19 +38,15 @@ export default {
       return this.$store.getters.user
     }
   },
-  methods: {
-    connectToggle () {
-      this.user ? this.disconnect() : this.connect()
-    },
-    connect () {
-      this.$store.dispatch({type: CONNECT, username: this.username})
-    },
-    disconnect () {
-      this.$store.dispatch({type: DISCONNECT})
+  validations: {
+    message: {
+      required
     }
   },
+  methods: {
+  },
   components: {
-    ImageAvatar
+    UserLogin
   }
 }
 </script>
@@ -75,10 +67,6 @@ export default {
     margin-top: 15px;
   }
 
-  .message-creation .form-control {
-    font-size: 13px;
-  }
-
   .message-creation textarea.form-control {
     height: 90px;
     padding: 10px;
@@ -89,13 +77,5 @@ export default {
     display: flex;
     justify-content: flex-end;
   }
-
-  .btn {
-    cursor: pointer;
-  }
-
-  .btn-primary  {
-    margin: 0 0 0 10px;
-  }
-
+  
 </style>

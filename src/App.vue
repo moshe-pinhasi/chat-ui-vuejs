@@ -8,10 +8,14 @@
 
 <script>
 import MessageCreation from './components/MessageCreation'
+import { LOAD_USER } from './store/UserModule'
 
 export default {
   components: {
     MessageCreation
+  },
+  created () {
+    this.$store.dispatch({type: LOAD_USER})
   }
 }
 </script>
@@ -22,12 +26,20 @@ export default {
     font-size: 14px;
   }
 
-.footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-}
+  .form-control {
+    font-size: 13px;
+  }
+
+  .btn {
+    cursor: pointer;
+  }
+
+  .footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
 
 
 
