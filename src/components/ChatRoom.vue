@@ -2,12 +2,16 @@
   <div class="chat-room">
     <ul class="list-unstyled">
       <li v-for="(message, i) in messages" :key="i" class="left clearfix">
-        <span class="chat-img pull-left">
-          <image-avatar :user="user" image-size="sm"></image-avatar>
-        </span>
-        <div class="chat-body clearfix">
-          <p class="username" :style="{color: user.color}">{{user.username}}</p>
-          <p class="message">{{message}}</p>
+        <div class="message-bubble">
+          <span class="chat-img" 
+              :class="{'pull-left': !user || (message.username !== user.username),
+                       'pull-right': user && (message.username === user.username)}">
+            <image-avatar :user="{avatar: message.avatar}" image-size="sm"></image-avatar>
+          </span>
+          <div class="chat-body clearfix" :class="{'user-message': user && (message.username === user.username)}">
+            <p class="username" :style="{color: message.color}">{{message.username}}</p>
+            <p class="message">{{message.text}}</p>
+          </div>
         </div>
       </li>
     </ul>    
@@ -20,18 +24,20 @@
 import ImageAvatar from './UserAvatar'
 
 export default {
-  data () {
-    return {
-      messages: ["moshe", "moshe1", "moshe", "moshe1", "moshe", "moshe1", "moshe", "moshe1", "moshe", "moshe1"]
-    }
-  },
   computed: {
     user () {
       return this.$store.getters.user
+    },
+    messages () {
+      return this.$store.getters.messages
     }
   },
   components: {
     ImageAvatar
+  },
+  updated () {
+    var elem = this.$el
+    elem.scrollTop = elem.scrollHeight
   }
 }
 </script>
@@ -60,12 +66,24 @@ export default {
 
   .chat-room .chat-body {
     margin-left: 50px;
-    background: #fbf9fa none repeat scroll 0 0;
     padding: 10px;
+    border-radius: 5px;
+    background: #519def none repeat scroll 0 0;
+  }
+
+  .chat-room .chat-body.user-message {
+    background-color: #67ef86;
+    margin-left: 0;
+    margin-right: 50px;
   }
 
   .chat-room .chat-body p {
     margin-bottom: 0;
   }
   
+  ::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+  }
+
 </style>

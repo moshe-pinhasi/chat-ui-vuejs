@@ -44,6 +44,11 @@ export default {
     }
   },
   methods: {
+    onSubmit () {
+      const message = Object.assign({}, this.user, {text: this.message})
+      this.$socket.emit('spotim/chat', message)
+      this.message = null
+    }
   },
   components: {
     UserLogin
@@ -52,7 +57,6 @@ export default {
 </script>
 
 <style scoped>
-
   .message-creation {
     width: 100%;
   }

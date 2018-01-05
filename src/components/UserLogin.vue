@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="connectToggle" class="user-login">
       <div class="row">
-        <div class="col-1 col-sm-0"><image-avatar :user="user" image-size="sm"></image-avatar></div>
+        <div class="col-1 col-sm-0">
+          <image-avatar :user="user" image-size="sm"></image-avatar>
+        </div>
         <input
           type="text"
           class="form-control col-3"
@@ -9,7 +11,7 @@
           @blur="$v.username.$touch()"
           id="username"
           placeholder="Username"
-          :disabled="conncted"      
+          :disabled="connceted"      
           v-model="username">
         
         <button 
@@ -38,13 +40,14 @@ export default {
   computed: {
     user () {
       var user = this.$store.getters.user
-      if (!user) return null
+      if (user) {
+        this.username = user.username
+      }
 
-      this.username = user.username
       return user
     },
-    conncted () {
-      return this.$store.getters.conncted
+    connceted () {
+      return this.$store.getters.connceted
     }
   },
   validations: {

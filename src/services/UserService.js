@@ -12,17 +12,16 @@ const avatars = [
 
 const colors = [
   '#175ed1',
-  '#17d19f',
-  '#e5e219',
   '#e55218',
-  '#ab1adb'
+  '#ab1adb',
+  '#f98f04'
 ]
 
 function getUserObj (username) {
   return {
     username,
     color: _.sample(colors),
-    imgUrl: _.sample(avatars)
+    avatar: _.sample(avatars)
   }
 }
 

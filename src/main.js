@@ -5,12 +5,14 @@ import App from './App'
 import Store from './store/store'
 import Vuelidate from 'vuelidate'
 import BootstrapVue from 'bootstrap-vue'
+import VueSocketio from 'vue-socket.io'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(Vuelidate)
 Vue.use(BootstrapVue)
+Vue.use(VueSocketio, 'https://spotim-demo-chat-server.herokuapp.com', Store)
 
 Vue.config.productionTip = false
 
