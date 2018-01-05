@@ -10,14 +10,19 @@ const avatars = [
   'https://spotim-demo-chat-server.herokuapp.com/avatars/005-bullbasaur.png'
 ]
 
-function getRandomAvatar () {
-  return _.sample(avatars)
-}
+const colors = [
+  '#175ed1',
+  '#17d19f',
+  '#e5e219',
+  '#e55218',
+  '#ab1adb'
+]
 
 function getUserObj (username) {
   return {
     username,
-    imgUrl: getRandomAvatar()
+    color: _.sample(colors),
+    imgUrl: _.sample(avatars)
   }
 }
 

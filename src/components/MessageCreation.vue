@@ -1,5 +1,5 @@
 <template>
-  <div class="message-creation container">
+  <div class="message-creation">
     <div class="message-creator">
       <user-login></user-login>
     </div>
@@ -54,8 +54,6 @@ export default {
 <style scoped>
 
   .message-creation {
-    background: #f5f3f3 none repeat scroll 0 0;
-    padding: 15px;
     width: 100%;
   }
 
