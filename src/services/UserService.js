@@ -25,6 +25,11 @@ function getUserObj (username) {
   }
 }
 
+function getUserMessage (user, message) {
+  return Object.assign({}, user, {text: message})
+}
+
 export default {
-  getUserObj
+  getUserObj,
+  getUserMessage
 }

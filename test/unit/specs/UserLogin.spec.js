@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuelidate from 'vuelidate'
 import UserLogin from '@/components/UserLogin'
-import UserModule from '@/store/UserModule'
+import { SET_USER, CONNECT, DISCONNECT } from '@/store/UserModule'
+import UserService from '@/services/UserService'
 import { mount } from 'avoriaz'
 import 'babel-polyfill'
 
@@ -14,7 +15,31 @@ describe('UserLogin.vue', () => {
   let store, component
 
   beforeEach(() => {
-    store = new Vuex.Store(Object.assign(UserModule))
+    store = new Vuex.Store({
+      state: {
+        user: null,
+        connected: false
+      },
+      getters: {
+        user: state => state.user,
+        connected: state => state.connected
+      },
+      mutations: {
+        [SET_USER] (state, {user, connected}) {
+          state.user = user
+          state.connected = connected
+        }
+      },
+      actions: {
+        [CONNECT] ({commit}, {username}) {
+          const user = UserService.getUserObj(username)
+          commit({type: SET_USER, user, connected: true})
+        },
+        [DISCONNECT] ({commit}) {
+          commit({type: SET_USER, user: null, connected: false})
+        }
+      }
+    })
   })
 
   function initComponent () {
@@ -36,7 +61,8 @@ describe('UserLogin.vue', () => {
 
   it('should make logout', () => {
     initComponent()
-    clickButton()
+    clickButton() // login
+    clickButton() // logout
 
     expect(store.state.user).to.equal(null)
     expect(store.state.connected).to.equal(false)

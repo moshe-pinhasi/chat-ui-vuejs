@@ -7,7 +7,7 @@
     <div class="message-box">
       <form @submit.prevent="onSubmit">
         <div class="row">
-          <textarea class="form-control" 
+          <textarea class="form-control text-message" 
                     placeholder="Type a message" 
                     :disabled="!user"
                     v-model="message"

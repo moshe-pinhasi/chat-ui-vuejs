@@ -3,7 +3,7 @@
 import UserService from '../services/UserService'
 import store from 'store'
 
-const SET_USER = 'user/set_user'
+export const SET_USER = 'user/set_user'
 export const CONNECT = 'user/connect'
 export const DISCONNECT = 'user/disconnect'
 export const LOAD_USER = 'user/load_user'

@@ -1,6 +1,7 @@
 'use strict'
 
 const ADD_MESSGAE = 'chat/addMessage'
+export const SOCKET_SPOTIM_CHAT = 'socket_spotimChat'
 
 export default {
   state: {
@@ -22,7 +23,7 @@ export default {
     }
   },
   actions: {
-    'socket_spotimChat': (context, message) => {
+    [SOCKET_SPOTIM_CHAT]: (context, message) => {
       context.commit(ADD_MESSGAE, message)
     }
   }
