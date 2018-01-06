@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Vuelidate from 'vuelidate'
 import { shallow } from 'avoriaz'
 import 'babel-polyfill'
 import { SEND_MESSGAE } from '@/store/ChatModule'
@@ -9,6 +10,7 @@ import UserService from '@/services/UserService'
 
 const ADD_MESSGAE = 'ADD_MESSGAE'
 
+Vue.use(Vuelidate)
 Vue.use(Vuex)
 
 describe('MessageCreation.vue', () => {
@@ -31,7 +33,7 @@ describe('MessageCreation.vue', () => {
       },
       actions: {
         [SEND_MESSGAE]: ({commit}, { message }) => {
-          const messageObj = UserService.getUserMessage(store.state.user, message)
+          const messageObj = UserService.getUserMessage(store.getters.user, message)
           commit({type: ADD_MESSGAE, message: messageObj})
         }
       }
