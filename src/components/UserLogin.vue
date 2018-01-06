@@ -11,7 +11,7 @@
           @blur="$v.username.$touch()"
           id="username"
           placeholder="Username"
-          :disabled="connceted"      
+          :disabled="connected"      
           v-model="username">
         
         <button 
@@ -46,8 +46,8 @@ export default {
 
       return user
     },
-    connceted () {
-      return this.$store.getters.connceted
+    connected () {
+      return this.$store.getters.connected
     }
   },
   validations: {

@@ -11,32 +11,32 @@ export const LOAD_USER = 'user/load_user'
 export default {
   state: {
     user: null,
-    connceted: false
+    connected: false
   },
   getters: {
     user: state => state.user,
-    connceted: state => state.connceted
+    connected: state => state.connected
   },
   mutations: {
-    [SET_USER] (state, {user, connceted}) {
+    [SET_USER] (state, {user, connected}) {
       state.user = user
-      state.connceted = connceted
+      state.connected = connected
     }
   },
   actions: {
     [CONNECT] ({commit}, {username}) {
       const user = UserService.getUserObj(username)
       store.set('user', user)
-      commit({type: SET_USER, user, connceted: true})
+      commit({type: SET_USER, user, connected: true})
     },
     [DISCONNECT] ({commit}) {
       store.remove('user')
-      commit({type: SET_USER, user: null, connceted: false})
+      commit({type: SET_USER, user: null, connected: false})
     },
     [LOAD_USER] ({commit}) {
       const user = store.get('user')
       if (user) {
-        commit({type: SET_USER, user, connceted: true})
+        commit({type: SET_USER, user, connected: true})
       }
     }
   }
