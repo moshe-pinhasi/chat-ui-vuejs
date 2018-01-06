@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { mount } from 'avoriaz'
+import { shallow } from 'avoriaz'
 import 'babel-polyfill'
-import { SOCKET_SPOTIM_CHAT } from '@/store/ChatModule'
 
 import ChatRoom from '@/components/ChatRoom'
 import UserService from '@/services/UserService'
+
+const ADD_MESSGAE = 'ADD_MESSGAE'
+const INCOMIG_MESSAGE = 'INCOMIG_MESSAGE'
 
 Vue.use(Vuex)
 
@@ -21,13 +23,13 @@ describe('ChatRoom.vue', () => {
         messages: state => state.messages
       },
       mutations: {
-        'ADD_MESSGAE': (state, message) => {
+        ADD_MESSGAE: (state, message) => {
           state.messages.push(message)
         }
       },
       actions: {
-        [SOCKET_SPOTIM_CHAT]: (context, message) => {
-          context.commit('ADD_MESSGAE', message)
+        INCOMIG_MESSAGE: (context, message) => {
+          context.commit(ADD_MESSGAE, message)
         }
       }
     })
@@ -36,9 +38,9 @@ describe('ChatRoom.vue', () => {
   it('should match the message in store to messages list', () => {
     const user = UserService.getUserObj('moshe')
     const message = UserService.getUserMessage(user, 'chat message')
-    store.dispatch(SOCKET_SPOTIM_CHAT, message)
+    store.dispatch(INCOMIG_MESSAGE, message)
 
-    component = mount(ChatRoom, { store })
+    component = shallow(ChatRoom, { store })
 
     const listElements = component.find('.chat-room li')
     const usernameElement = component.find('.chat-room li .username')[0]

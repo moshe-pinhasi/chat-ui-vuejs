@@ -1,5 +1,7 @@
 'use strict'
 
+import UserService from '../services/UserService'
+
 const ADD_MESSGAE = 'chat/addMessage'
 const SOCKET_SPOTIM_CHAT = 'socket_spotimChat'
 export const SEND_MESSGAE = 'chat/sendMessage'
@@ -29,8 +31,8 @@ export default function createChatModule (socket) {
         context.commit(ADD_MESSGAE, message)
       },
       [SEND_MESSGAE]: ({rootGetters}, { message }) => {
-        message = Object.assign({}, rootGetters.user, {text: message})
-        socket.emit('spotim/chat', message)
+        const messageObj = UserService.getUserMessage(rootGetters.user, message)
+        socket.emit('spotim/chat', messageObj)
       }
     }
   }
