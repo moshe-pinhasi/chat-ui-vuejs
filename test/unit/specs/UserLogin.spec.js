@@ -11,10 +11,10 @@ Vue.use(Vuex)
 
 describe('UserLogin.vue', () => {
   const username = 'moshe'
-  let store, component, button
+  let store, component
 
   beforeEach(() => {
-    store = new Vuex.Store(UserModule)
+    store = new Vuex.Store(Object.assign(UserModule))
   })
 
   function initComponent () {
@@ -22,14 +22,13 @@ describe('UserLogin.vue', () => {
     component.setData({ username })
   }
 
-  function findButton () {
-    button = component.find('button')[0]
+  function clickButton () {
+    component.find('button')[0].trigger('click')
   }
 
   it('should make login', () => {
     initComponent()
-    findButton()
-    button.trigger('click') // to login
+    clickButton()
 
     expect(store.state.user.username).to.equal(username)
     expect(store.state.connected).to.equal(true)
@@ -37,9 +36,7 @@ describe('UserLogin.vue', () => {
 
   it('should make logout', () => {
     initComponent()
-    findButton()
-    button.trigger('click') // to login first
-    button.trigger('click') // to logout
+    clickButton()
 
     expect(store.state.user).to.equal(null)
     expect(store.state.connected).to.equal(false)
