@@ -1,10 +1,12 @@
+'use strict'
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { shallow } from 'avoriaz'
-import 'babel-polyfill'
 
 import ChatRoom from '@/components/ChatRoom'
 import UserService from '@/services/UserService'
+import 'babel-polyfill'
 
 const ADD_MESSGAE = 'ADD_MESSGAE'
 const INCOMIG_MESSAGE = 'INCOMIG_MESSAGE'

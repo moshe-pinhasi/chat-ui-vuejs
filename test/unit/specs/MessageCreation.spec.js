@@ -1,12 +1,14 @@
+'use strict'
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuelidate from 'vuelidate'
 import { shallow } from 'avoriaz'
-import 'babel-polyfill'
 import { SEND_MESSGAE } from '@/store/ChatModule'
 
 import MessageCreation from '@/components/MessageCreation'
 import UserService from '@/services/UserService'
+import 'babel-polyfill'
 
 const ADD_MESSGAE = 'ADD_MESSGAE'
 
