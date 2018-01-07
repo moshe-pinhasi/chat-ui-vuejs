@@ -26,6 +26,7 @@
 
 import UserLogin from './UserLogin'
 import { required } from 'vuelidate/lib/validators'
+import { SEND_MESSGAE } from '../store/ChatModule'
 
 export default {
   data () {
@@ -45,8 +46,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      const message = Object.assign({}, this.user, {text: this.message})
-      this.$socket.emit('spotim/chat', message)
+      this.$store.dispatch({type: SEND_MESSGAE, message: this.message})
       this.message = null
     }
   },

@@ -1,10 +1,12 @@
+'use strict'
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuelidate from 'vuelidate'
 import UserLogin from '@/components/UserLogin'
 import { SET_USER, CONNECT, DISCONNECT } from '@/store/UserModule'
 import UserService from '@/services/UserService'
-import { mount } from 'avoriaz'
+import { shallow } from 'avoriaz'
 import 'babel-polyfill'
 
 Vue.use(Vuelidate)
@@ -43,7 +45,7 @@ describe('UserLogin.vue', () => {
   })
 
   function initComponent () {
-    component = mount(UserLogin, { store })
+    component = shallow(UserLogin, { store })
     component.setData({ username })
   }
 
@@ -55,8 +57,8 @@ describe('UserLogin.vue', () => {
     initComponent()
     clickButton()
 
-    expect(store.state.user.username).to.equal(username)
-    expect(store.state.connected).to.equal(true)
+    expect(store.getters.user.username).to.equal(username)
+    expect(store.getters.connected).to.equal(true)
   })
 
   it('should make logout', () => {
@@ -64,7 +66,7 @@ describe('UserLogin.vue', () => {
     clickButton() // login
     clickButton() // logout
 
-    expect(store.state.user).to.equal(null)
-    expect(store.state.connected).to.equal(false)
+    expect(store.getters.user).to.equal(null)
+    expect(store.getters.connected).to.equal(false)
   })
 })
